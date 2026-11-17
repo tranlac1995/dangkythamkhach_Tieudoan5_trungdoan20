@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Trang Thông Tin Đơn Vị và Đăng Ký Thăm</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+
+/* Nền trang */
+#background {
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background: url('background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  z-index: -1;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  color: #000;
+}
+
+/* Header */
+header {
+  background: rgba(255,255,255,0.8);
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  color: #000;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+header h1 {
+    font-size: 1.7rem;       
+    margin-bottom: 10px;
+    color: #007BFF;        
+}
+
+/* Container cố định cho nút */
+.button-container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2000;
+}
+
+/* Nút */
+.login-btn {
+  width: 150px;
+  height: 50px;
+  background: #003366;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
+}
+.login-btn:hover {
+  background: #0055aa;
+  transform: translateY(-2px);
+}
+
+/* Section chính */
+section {
+  max-width: 900px;
+  margin: 150px auto 30px;
+  padding: 10px;
+}
+.card {
+  background: rgba(0, 33, 33, 0.4);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  margin: 20px 0;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+  color: #fff;
+}
+.card:hover {transform: translateY(-5px);}
+#gth h2,
+#anh h2,
+#qd h2 {
+  color: #F5F5DC;
+}
+p, ul {
+  line-height: 1.6;
+  color: #fff;
+  text-align: justify; /* căn đều 2 bên */
+}
+ul li {margin-bottom:8px;}
+iframe {border-radius: 12px; width: 100%; height: 315px;}
+.image-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+.image-item {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.image-item img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  height: 150px;
+}
+.image-item p {
+  margin-top: 5px;
+  text-align: center;
+  color: #fff;
+  font-size: 0.6rem;
+}
+
+/* Form đăng ký */
+.container {
+  max-width: 600px;
+  margin: 50px auto 50px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(173, 216, 230, 0.8));
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  color: #000;
+  border: 2px solid #1e90ff;
+}
+.container h2 {text-align:center; margin-bottom:25px; color:#003366;}
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #003366;
+}
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 2px solid #1e90ff;
+  background: rgba(255,255,255,0.7);
+  color: #000;
+  transition: all 0.3s ease;
+}
+input::placeholder {color: #555;}
+input:focus, select:focus {
+  outline: none;
+  border-color: #ff4500;
+  background: rgba(255,255,255,0.9);
+}
+button[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 10px;
+  background: #ff4500;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+button[type="submit"]:hover {
+  background: #ff6347;
+  transform: translateY(-2px);
+}
+#status {text-align:center; margin-top:15px; font-weight:bold; color:#ff4500;}
+
+/* CARD TRANG TUYÊN TRUYỀN CHIA 2 Ô */
+.card-split {
+  display: flex;
+  padding: 0;
+}
+.card-split .card-half {
+  flex: 1;
+  padding: 25px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.card-split .card-half:hover {
+  background: rgba(255,255,255,0.15);
+}
+.card-split .left {
+  border-right: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Media queries */
+@media(max-width:600px){
+  header h1 {font-size:1.4rem;}
+  .card {padding:15px; margin:15px 10px;}
+  iframe {height:200px;}
+  .image-item {width:48%; margin-bottom:10px;}
+  .container {padding:20px; margin:80px 10px;}
+  input, select {padding:10px;}
+  button[type="submit"] {padding:12px; font-size:14px;}
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .login-btn {
+    width: 45%;
+    height: 45px;
+    font-size: 0.9rem;
+  }
+  header {padding-bottom: 70px;}
+}
+
+@media (max-width: 600px) {
+  .card-split {flex-direction: column;}
+  .card-split .left {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="background"></div>
+
+<header>
+<h1> TIỂU ĐOÀN 5, TRUNG ĐOÀN 20, LỮ ĐOÀN 330</h1>
+
+</header>
+
+<section>
+  <div class="card" id="gth">
+    <h2>Giới thiệu</h2>
+    <p>Tiểu đoàn 5, Trung đoàn 20 là đơn vị trực thuộc Sư đoàn 330, Quân khu 9, có nhiệm vụ huấn luyện, sẵn sàng chiến đấu và quản lý, rèn luyện bộ đội. Đơn vị thường xuyên tổ chức huấn luyện theo đúng chương trình, kế hoạch, điều lệnh, góp phần nâng cao bản lĩnh chính trị, ý chí quyết tâm, ý thức tổ chức kỷ luật và trình độ quân sự cho cán bộ, chiến sĩ. Bên cạnh nhiệm vụ huấn luyện, Trung đoàn 20 còn tích cực tham gia các hoạt động dân vận, giúp đỡ nhân dân phát triển kinh tế, phòng chống và khắc phục hậu quả thiên tai, góp phần xây dựng hình ảnh cao đẹp của người chiến sĩ Quân đội nhân dân Việt Nam trong lòng nhân dân.</p>
+  </div>
+
+  
+<div class="card" id="anh">
+    <h2>Ảnh Đơn Vị</h2>
+    <div class="image-row">
+	<div class="image-item"><img src="anh1.jpg" alt="Ảnh 1"><p>Lễ tuyên thệ chiến sĩ mới năm 2026</p></div>
+      <div class="image-item"><img src="anh2.jpg" alt="Ảnh 2"><p>Huấn luyện tại đơn vị</p></div>
+ 	<div class="image-item"><img src="anh3.jpg" alt="Ảnh 3"><p>Hoạt động văn hóa văn nghệ</p></div>
+      <div class="image-item"><img src="anh4.jpg" alt="Ảnh 4"><p>Làm tốt công tác dân vận</p></div>
+      <div class="image-item"><img src="anh5.jpg" alt="Ảnh 5"><p>Vui xuân năm 2026</p></div>
+      <div class="image-item"><img src="anh6.jpg" alt="Ảnh 6"><p>Quang cảnh đơn vị</p></div>
+    </div>
+  </div>
+
+  <div class="card" id="qd">
+    <h2>Quy định thăm gặp</h2>
+    <ul>
+      <li>Mang CCCD/định danh hợp lệ.</li>
+      <li>Tuân thủ hướng dẫn của cán bộ trực.</li>
+      <li>Không chụp ảnh tại khu vực cấm.</li>
+    </ul>
+  </div>
+
+
+</section>
+<div class="container">
+<h2>Đăng ký vào thăm quân nhân</h2>
+<form id="visitForm">
+  <label>Họ tên khách:</label>
+  <input type="text" id="hoten" placeholder="Nhập họ tên" required />
+  <label>Số CCCD:</label>
+  <input type="text" id="cccd" placeholder="Nhập CCCD" required />
+  <label>Mối quan hệ:</label>
+  <input type="text" id="quanhe" placeholder="Nhập quan hệ" required />
+  <label>Số lượng người lên thăm:</label>
+  <input type="number" id="soluong" placeholder="Nhập số lượng" required min="1" />
+  <label>Phương tiện:</label>
+  <input type="text" id="phuongtien" placeholder="Phương tiện" required />
+  <label>Tên quân nhân muốn thăm:</label>
+  <input type="text" id="quannhan" placeholder="Nhập tên quân nhân" required />
+  <label>Số điện thoại:</label>
+  <input type="text" id="sdt" placeholder="Nhập số điện thoại" required />
+  <label for="tinhthanh">Tỉnh/Thành phố:</label>
+  <input type="text" id="tinhthanh" name="tinhthanh" placeholder="Nhập tỉnh/thành" required>
+  <label>Đơn vị:</label>
+  <input type="text" id="donvi" placeholder="Nhập đơn vị" required />
+  <button type="submit">Gửi đăng ký</button>
+</form>
+<p id="status"></p>
+</div>
+<div id="statusContainer" style="
+max-width:500px;
+margin:40px auto 60px;
+padding:20px;
+background:#fff;
+border-radius:15px;
+box-shadow:0 6px 20px rgba(0,0,0,0.4);
+border:2px solid #1e90ff;
+text-align:center;
+">
+
+<h2 style="color:#003366">Tra cứu trạng thái đăng ký</h2>
+
+<input id="cccdCheck" placeholder="Nhập CCCD" style="
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:2px solid #1e90ff;
+">
+
+<button onclick="checkStatus()" style="
+margin-top:15px;
+padding:12px;
+width:100%;
+background:#ff4500;
+color:#fff;
+border:none;
+border-radius:10px;
+cursor:pointer;
+">
+Tra cứu
+</button>
+
+<button id="btnHide" onclick="hideStatus()" style="
+margin-top:10px;
+background:#777;
+color:#fff;
+border:none;
+padding:10px;
+border-radius:10px;
+cursor:pointer;
+">
+Ẩn thông tin
+</button>
+
+<button id="btnShow" onclick="showStatus()" style="
+margin-top:10px;
+display:none;
+padding:10px;
+border:none;
+background:#1e90ff;
+color:#fff;
+border-radius:10px;
+cursor:pointer;
+">
+Hiện thông tin
+</button>
+
+<div id="statusResult" style="margin-top:15px;font-weight:bold;"></div>
+
+</div>
+
+<script>
+document.getElementById("visitForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const statusEl = document.getElementById("status");
+
+  const data = {
+    hoten: document.getElementById("hoten").value,
+    cccd: document.getElementById("cccd").value,
+    quanhe: document.getElementById("quanhe").value,
+    soluong: Number(document.getElementById("soluong").value),
+    phuongtien: document.getElementById("phuongtien").value,
+    quannhan: document.getElementById("quannhan").value,
+    sdt: document.getElementById("sdt").value,
+    tinhthanhpho: document.getElementById("tinhthanh").value,
+    donvi: document.getElementById("donvi").value,
+    trangthai: "Chờ duyệt",
+    thoigian: new Date().toLocaleString()
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbzeffHZ5xExApO8nrICQVusIghsBADtm_xo2tbh8Hp2mDmVuv0-S2NY6AI4IUqYvN4u/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    statusEl.innerHTML = "Đăng ký thành công!";
+    document.getElementById("visitForm").reset();
+    setTimeout(() => { statusEl.innerHTML = ""; }, 40000);
+  })
+  .catch(err => {
+    console.error(err);
+    statusEl.innerHTML = "Gửi thất bại, vui lòng thử lại!";
+    setTimeout(() => { statusEl.innerHTML = ""; }, 40000);
+  });
+});
+// ===== TRA CỨU TRẠNG THÁI =====
+
+function checkStatus() {
+
+document.getElementById("statusResult").style.display = "block";
+document.getElementById("btnHide").style.display = "inline-block";
+document.getElementById("btnShow").style.display = "none";
+
+const c = document.getElementById("cccdCheck").value.trim();
+const result = document.getElementById("statusResult");
+
+if (!c) {
+    result.innerHTML = "⚠️ Vui lòng nhập CCCD";
+    return;
+}
+
+fetch(`https://script.google.com/macros/s/AKfycbzsFGlYjqyJsC0jj6pURy0BmnY0osUzcSmTvfnmWzvviM9DqSBWg56dfAYx4XWhJ9o3/exec?cccd=${c}`)
+.then(r => r.json())
+.then(d => {
+
+if (!d || d.length === 0) {
+    result.innerHTML = "❌ Không tìm thấy đăng ký";
+} else {
+
+const r = d[0];
+
+result.innerHTML = `
+<div style="text-align:left; line-height:1.7">
+<b>Họ tên:</b> ${r.hoten}<br>
+<b>CCCD:</b> ${r.cccd}<br>
+<b>Quan hệ:</b> ${r.quanhe}<br>
+<b>Số lượng:</b> ${r.soluong}<br>
+<b>Phương tiện:</b> ${r.phuongtien}<br>
+<b>Quân nhân:</b> ${r.quannhan}<br>
+<b>SĐT:</b> ${r.sdt}<br>
+<b>Tỉnh/Thành:</b> ${r.tinhthanhpho}<br>
+<b>Đơn vị:</b> ${r.donvi}<br>
+<b>Trạng thái:</b> <span style="color:green">${r.trangthai}</span><br>
+<b>Thời gian đăng ký:</b> ${r.thoigianvao}
+</div>
+`;
+}
+
+})
+.catch(() => {
+result.innerHTML = "❌ Lỗi tra cứu";
+});
+
+}
+
+function hideStatus() {
+document.getElementById("statusResult").style.display = "none";
+document.getElementById("btnHide").style.display = "none";
+document.getElementById("btnShow").style.display = "inline-block";
+}
+
+function showStatus() {
+document.getElementById("statusResult").style.display = "block";
+document.getElementById("btnHide").style.display = "inline-block";
+document.getElementById("btnShow").style.display = "none";
+}
+function openGallery(type) {
+  const menu = document.getElementById("menu4");
+  const gallery = document.getElementById("gallery");
+
+  let images = [];
+
+  if (type === 1) {
+    images = ["anh20.jpg","anh21.jpg","anh22.jpg","anh23.jpg","anh24.jpg","anh25.jpg"];
+  } else if (type === 2) {
+    images = ["anh1.jpg","anh2.jpg","anh4.jpg","anh5.jpg"];
+  } else if (type === 3) {
+    images = ["anh3.jpg","anh4.jpg","anh5.jpg","anh6.jpg"];
+  } else if (type === 4) {
+    images = ["anh2.jpg","anh3.jpg","anh4.jpg","anh1.jpg"];
+  }
+
+  menu.style.display = "none";
+  gallery.style.display = "block";
+
+  gallery.innerHTML = `
+    <button onclick="backMenu()" style="margin-bottom:10px; padding:10px; border:none; background:#ff4500; color:#fff; border-radius:8px;">
+      ← Quay lại
+    </button>
+
+    <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+      ${images.map(img => `
+        <img src="${img}" style="width:45%; aspect-ratio: 4/3; object-fit:contain; background:#000; border-radius:10px;">
+      `).join("")}
+    </div>
+  `;
+}
+
+function backMenu() {
+  document.getElementById("menu4").style.display = "flex";
+  document.getElementById("gallery").style.display = "none";
+}
+</script>
+
+</body>
+</html>
